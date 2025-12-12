@@ -207,7 +207,7 @@ class _VideoCutterState extends State<VideoCutter> {
               duration: const Duration(seconds: 3),
             ),
           );
-        } else {
+      } else {
           setState(() {
             _status = 'Failed to trim video';
           });
@@ -317,8 +317,8 @@ class _VideoCutterState extends State<VideoCutter> {
                       color: Colors.deepPurple.withOpacity(0.3),
                     ),
                   ),
-                  child: Column(
-                    children: [
+        child: Column(
+          children: [
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
@@ -560,8 +560,8 @@ class _VideoCutterState extends State<VideoCutter> {
                       ),
                     ),
                   ],
-                ),
-                const SizedBox(height: 20),
+            ),
+            const SizedBox(height: 20),
 
                 // Trim Button
                 ElevatedButton.icon(

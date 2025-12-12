@@ -119,7 +119,7 @@ class _MP3ListScreenState extends State<MP3ListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Music'),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
         actions: [
           IconButton(icon: const Icon(Icons.refresh), onPressed: _loadMP3s),
@@ -148,7 +148,7 @@ class _MP3ListScreenState extends State<MP3ListScreen> {
                     icon: const Icon(Icons.refresh),
                     label: const Text('Refresh'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: Colors.orange,
                       foregroundColor: Colors.white,
                     ),
                   ),
@@ -162,7 +162,7 @@ class _MP3ListScreenState extends State<MP3ListScreen> {
                   Container(
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple.shade200,
+                      color: Colors.orange.shade200,
                       border: Border(
                         bottom: BorderSide(color: Colors.grey.shade200),
                       ),
@@ -171,7 +171,7 @@ class _MP3ListScreenState extends State<MP3ListScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.music_note, color: Colors.deepPurple),
+                            Icon(Icons.music_note, color: Colors.orange),
                             const SizedBox(width: 10),
                             Expanded(
                               child: Text(
@@ -196,7 +196,7 @@ class _MP3ListScreenState extends State<MP3ListScreen> {
                                       _mp3s[_playingIndex!],
                                       _playingIndex!,
                                     ),
-                              color: Colors.deepPurple,
+                              color: Colors.orange,
                             ),
                           ],
                         ),
@@ -255,26 +255,27 @@ class _MP3ListScreenState extends State<MP3ListScreen> {
                             vertical: 8,
                           ),
                           elevation: 2,
-                          color: isCurrentPlaying ? Colors.deepPurple : null,
+                          color: isCurrentPlaying ? Colors.orange : null,
                           child: ListTile(
                             leading: Container(
                               width: 50,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.deepPurple.shade100,
+                                color: Colors.orange.shade100,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Icon(
                                 Icons.music_note,
-                                color: Colors.deepPurple,
+                                color: Colors.orange,
                               ),
                             ),
                             title: Text(
                               fileName,
                               style: TextStyle(
-                                fontWeight: isCurrentPlaying
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
+                                color: isCurrentPlaying
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -286,7 +287,9 @@ class _MP3ListScreenState extends State<MP3ListScreen> {
                                   path.dirname(mp3.path),
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey.shade600,
+                                    color: isCurrentPlaying
+                                        ? Colors.white70
+                                        : Colors.black.withOpacity(0.7),
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -298,7 +301,9 @@ class _MP3ListScreenState extends State<MP3ListScreen> {
                                       snapshot.data ?? '',
                                       style: TextStyle(
                                         fontSize: 11,
-                                        color: Colors.grey.shade500,
+                                        color: isCurrentPlaying
+                                            ? Colors.white70
+                                            : Colors.black.withOpacity(0.7),
                                       ),
                                     );
                                   },
@@ -309,20 +314,29 @@ class _MP3ListScreenState extends State<MP3ListScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 if (isCurrentPlaying && _isPlaying)
-                                  Icon(Icons.equalizer, color: Colors.white),
+                                  Icon(
+                                    Icons.equalizer,
+                                    color: isCurrentPlaying
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
                                 IconButton(
                                   icon: Icon(
                                     isCurrentPlaying && _isPlaying
                                         ? Icons.pause
                                         : Icons.play_arrow,
-                                    color: Colors.white,
+                                    color: isCurrentPlaying
+                                        ? Colors.white
+                                        : Colors.black,
                                   ),
                                   onPressed: () => _playAudio(mp3, index),
                                 ),
                                 IconButton(
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.share,
-                                    color: Colors.white,
+                                    color: isCurrentPlaying
+                                        ? Colors.white
+                                        : Colors.black,
                                   ),
                                   onPressed: () {
                                     Share.shareXFiles([

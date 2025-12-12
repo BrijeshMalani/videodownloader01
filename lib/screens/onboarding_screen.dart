@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../services/ad_manager.dart';
+import '../utils/common.dart';
 import '../utils/preferences.dart';
 import '../widgets/WorkingNativeAdWidget.dart';
 import 'home_screen.dart';
@@ -17,9 +19,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<OnboardingData> _pages = [
     OnboardingData(
-      title: 'Download Videos',
+      title: 'Save Videos',
       description:
-          'Download videos from Instagram, Facebook, Twitter, and TikTok with ease',
+          'Save videos from Instagram, Facebook, Twitter, and TikTok with ease',
       icon: Icons.download,
       color: Colors.purple,
     ),
@@ -31,7 +33,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
     OnboardingData(
       title: 'Manage Files',
-      description: 'View and play all your downloaded videos and audio files',
+      description: 'View and play all your save videos and audio files',
       icon: Icons.folder,
       color: Colors.orange,
     ),
@@ -43,7 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
     OnboardingData(
       title: 'Get Started',
-      description: 'Start downloading your favorite videos now!',
+      description: 'Start saving your favorite videos now!',
       icon: Icons.rocket_launch,
       color: Colors.red,
     ),
@@ -67,6 +69,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _completeOnboarding() async {
+    if (Common.adsopen == "2") {
+      Common.openUrl();
+    }
+    AdManager().showInterstitialAd();
     await Preferences.setOnboardingCompleted(true);
     if (!mounted) return;
     Navigator.of(

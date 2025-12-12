@@ -46,16 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.grey.shade900, Colors.grey.shade800],
+            colors: [Colors.white, Colors.orange.shade50],
           ),
           borderRadius: BorderRadius.circular(25),
-          border: Border.all(
-            color: Colors.deepPurple.withOpacity(0.5),
-            width: 2,
-          ),
+          border: Border.all(color: Colors.orange.withOpacity(0.5), width: 2),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.3),
               blurRadius: 20,
               spreadRadius: 5,
             ),
@@ -68,14 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.2),
+                color: Colors.orange.withOpacity(0.2),
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.deepPurple, width: 3),
+                border: Border.all(color: Colors.orange, width: 3),
               ),
               child: const Icon(
                 Icons.exit_to_app,
                 size: 50,
-                color: Colors.deepPurple,
+                color: Colors.orange,
               ),
             ),
             const SizedBox(height: 20),
@@ -86,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.black87,
               ),
             ),
             const SizedBox(height: 12),
@@ -95,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               'Are you sure you want to exit?',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey.shade300),
+              style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
             ),
             const SizedBox(height: 30),
 
@@ -119,10 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: const Text(
                         'Cancel',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black87,
                         ),
                       ),
                     ),
@@ -136,12 +133,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 50,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.deepPurple, Colors.purple],
+                        colors: [Colors.orange, Colors.deepOrange],
                       ),
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.deepPurple.withOpacity(0.5),
+                          color: Colors.orange.withOpacity(0.5),
                           blurRadius: 10,
                           spreadRadius: 2,
                         ),
@@ -192,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
           elevation: 0,
         ),
@@ -205,8 +202,8 @@ class _HomeScreenState extends State<HomeScreen> {
               _currentIndex = index;
             });
           },
-          backgroundColor: Colors.grey.shade900,
-          selectedItemColor: Colors.deepPurple,
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.orange,
           unselectedItemColor: Colors.grey.shade600,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -231,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.deepPurple.shade900, Colors.purple.shade800],
+            colors: [Colors.orange.shade700, Colors.deepOrange.shade600],
           ),
         ),
         child: ListView(
@@ -240,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
             DrawerHeader(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.deepPurple, Colors.purple],
+                  colors: [Colors.orange, Colors.deepOrange],
                 ),
               ),
               child: Column(
@@ -256,12 +253,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: const Icon(
                       Icons.play_circle_filled,
                       size: 40,
-                      color: Colors.deepPurple,
+                      color: Colors.orange,
                     ),
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    'Video Downloader',
+                    'Video Saver',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -277,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             _buildDrawerItem(
               icon: Icons.download,
-              title: 'Download Videos',
+              title: 'Save Videos',
               onTap: () {
                 if (Common.adsopen == "2") {
                   Common.openUrl();
@@ -344,10 +341,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const WebViewScreen(
+                    builder: (_) => WebViewScreen(
                       title: 'Privacy Policy',
-                      url:
-                          'https://www.privacypolicygenerator.info/live.php?token=YOUR_PRIVACY_TOKEN',
+                      url: Common.privacy_policy == ""
+                          ? 'https://www.privacypolicygenerator.info/live.php?token=YOUR_PRIVACY_TOKEN'
+                          : Common.privacy_policy,
                     ),
                   ),
                 );
@@ -361,10 +359,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const WebViewScreen(
+                    builder: (_) => WebViewScreen(
                       title: 'Terms of Service',
-                      url:
-                          'https://www.termsofservicegenerator.info/live.php?token=YOUR_TERMS_TOKEN',
+                      url: Common.terms_conditions == ""
+                          ? 'https://www.termsofservicegenerator.info/live.php?token=YOUR_TERMS_TOKEN'
+                          : Common.terms_conditions,
                     ),
                   ),
                 );
@@ -376,7 +375,8 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () async {
                 Navigator.pop(context);
                 final url = Uri.parse(
-                  'https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME',
+                  'https://play.google.com/store/apps/details?id=' +
+                      Common.packageName,
                 );
                 if (await canLaunchUrl(url)) {
                   await launchUrl(url, mode: LaunchMode.externalApplication);
@@ -389,7 +389,8 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.pop(context);
                 Share.share(
-                  'Check out this amazing Video Downloader app! Download videos from Instagram, Facebook, Twitter, and TikTok. https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME',
+                  'Check out this amazing Video Saver app! Save videos from Instagram, Facebook, Twitter, and TikTok. https://play.google.com/store/apps/details?id=' +
+                      Common.packageName,
                 );
               },
             ),
@@ -400,7 +401,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.pop(context);
                 showAboutDialog(
                   context: context,
-                  applicationName: 'Video Downloader',
+                  applicationName: 'Video Saver',
                   applicationVersion: '1.0.0',
                   applicationIcon: const Icon(
                     Icons.play_circle_filled,
@@ -436,112 +437,129 @@ class HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.black, Colors.grey.shade900],
-          ),
-        ),
+        decoration: BoxDecoration(color: Colors.white),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Download Videos',
+                'Save Videos',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black87,
                 ),
               ),
-              const SizedBox(height: 10),
-              GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                children: [
-                  _buildPlatformCard(
-                    context,
-                    'Instagram',
-                    Icons.camera_alt,
-                    Colors.purple,
-                    () {
-                      if (Common.adsopen == "2") {
-                        Common.openUrl();
-                      }
-                      AdManager().showInterstitialAd();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const VideoDownloaderScreen(
-                            platform: 'instagram',
+              const SizedBox(height: 15),
+              // URL Input Field
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Colors.white, Colors.grey.shade50],
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 20,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 8),
+                    ),
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Paste Insta, FB, Tik, Twit URL',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      TextField(
+                        style: const TextStyle(color: Colors.black87),
+                        decoration: InputDecoration(
+                          labelText: 'Enter Video URL',
+                          labelStyle: const TextStyle(color: Colors.black),
+                          hintText: 'Paste video URL here',
+                          hintStyle: TextStyle(color: Colors.grey.shade600),
+                          prefixIcon: const Icon(
+                            Icons.link,
+                            color: Colors.black,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                        ),
+                        onTap: () {
+                          // Open download screen on tap
+                          if (Common.adsopen == "2") {
+                            Common.openUrl();
+                          }
+                          AdManager().showInterstitialAd();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const VideoDownloaderScreen(),
+                            ),
+                          );
+                        },
+                        readOnly: true,
+                      ),
+                      const SizedBox(height: 15),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            // Open download screen
+                            if (Common.adsopen == "2") {
+                              Common.openUrl();
+                            }
+                            AdManager().showInterstitialAd();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const VideoDownloaderScreen(),
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.download, size: 20),
+                          label: const Text(
+                            'Save',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            elevation: 5,
                           ),
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   ),
-                  _buildPlatformCard(
-                    context,
-                    'Facebook',
-                    Icons.facebook,
-                    Colors.blue,
-                    () {
-                      if (Common.adsopen == "2") {
-                        Common.openUrl();
-                      }
-                      AdManager().showInterstitialAd();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              const VideoDownloaderScreen(platform: 'facebook'),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildPlatformCard(
-                    context,
-                    'Twitter/X',
-                    Icons.alternate_email,
-                    Colors.blueAccent,
-                    () {
-                      if (Common.adsopen == "2") {
-                        Common.openUrl();
-                      }
-                      AdManager().showInterstitialAd();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              const VideoDownloaderScreen(platform: 'twitter'),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildPlatformCard(
-                    context,
-                    'TikTok',
-                    Icons.music_note,
-                    Colors.white,
-                    () {
-                      if (Common.adsopen == "2") {
-                        Common.openUrl();
-                      }
-                      AdManager().showInterstitialAd();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              const VideoDownloaderScreen(platform: 'tiktok'),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                ),
               ),
               const SizedBox(height: 15),
               const Text(
@@ -549,7 +567,7 @@ class HomeTab extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black87,
                 ),
               ),
               const SizedBox(height: 15),
@@ -595,55 +613,6 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  Widget _buildPlatformCard(
-    BuildContext context,
-    String title,
-    IconData icon,
-    Color color,
-    VoidCallback onTap,
-  ) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(15),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey.shade900,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: color.withOpacity(0.3), width: 1),
-          boxShadow: [
-            BoxShadow(
-              color: color.withOpacity(0.2),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, size: 30, color: color),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildToolCard(
     BuildContext context,
     String title,
@@ -658,14 +627,23 @@ class HomeTab extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: Colors.grey.shade900,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.grey.shade800, width: 1),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.white, Colors.grey.shade50],
+          ),
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.grey,
+              blurRadius: 20,
+              spreadRadius: 2,
+              offset: const Offset(0, 8),
+            ),
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
               blurRadius: 10,
-              offset: const Offset(0, 5),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -689,13 +667,13 @@ class HomeTab extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 5),
                   Text(
                     subtitle,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade400),
+                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
                   ),
                 ],
               ),

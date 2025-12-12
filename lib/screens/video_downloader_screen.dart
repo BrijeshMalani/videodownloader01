@@ -56,18 +56,8 @@ class _VideoDownloaderScreenState extends State<VideoDownloaderScreen> {
   }
 
   Color get _platformColor {
-    switch (widget.platform?.toLowerCase()) {
-      case 'instagram':
-        return Colors.purple;
-      case 'facebook':
-        return Colors.blue;
-      case 'twitter':
-        return Colors.black;
-      case 'tiktok':
-        return Colors.black;
-      default:
-        return Colors.deepPurple;
-    }
+    // All platforms use orange theme
+    return Colors.orange;
   }
 
   Future<void> _fetchVideo() async {
@@ -234,10 +224,10 @@ class _VideoDownloaderScreenState extends State<VideoDownloaderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black45,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('$_platformName Downloader'),
-        backgroundColor: _platformColor,
+        title: Text('$_platformName Saver'),
+        backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -250,15 +240,20 @@ class _VideoDownloaderScreenState extends State<VideoDownloaderScreen> {
               controller: _urlController,
               decoration: InputDecoration(
                 labelText: 'Enter $_platformName URL',
-                labelStyle: const TextStyle(color: Colors.white),
+                labelStyle: const TextStyle(color: Colors.orange),
                 hintText: 'Paste video URL here',
-                hintStyle: const TextStyle(color: Colors.white),
-                prefixIcon: Icon(_platformIcon, color: Colors.white),
+                hintStyle: TextStyle(color: Colors.grey.shade600),
+                prefixIcon: const Icon(Icons.link, color: Colors.orange),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(color: Colors.orange.withOpacity(0.3)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: const BorderSide(color: Colors.orange, width: 2),
                 ),
                 filled: true,
-                fillColor: Colors.black45,
+                fillColor: Colors.grey.shade100,
               ),
             ),
             const SizedBox(height: 20),
@@ -374,7 +369,7 @@ class _VideoDownloaderScreenState extends State<VideoDownloaderScreen> {
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                                  color: Colors.black87,
                                 ),
                               ),
                             ],
@@ -386,7 +381,7 @@ class _VideoDownloaderScreenState extends State<VideoDownloaderScreen> {
                               _videoData!.caption!,
                               style: const TextStyle(
                                 fontSize: 14,
-                                color: Colors.black,
+                                color: Colors.black87,
                               ),
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
@@ -450,7 +445,7 @@ class _VideoDownloaderScreenState extends State<VideoDownloaderScreen> {
                             ElevatedButton.icon(
                               onPressed: _downloadVideo,
                               icon: const Icon(Icons.download),
-                              label: const Text('Download Video'),
+                              label: const Text('Save Video'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: _platformColor,
                                 foregroundColor: Colors.white,

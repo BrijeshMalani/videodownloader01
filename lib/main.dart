@@ -72,7 +72,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       // App is going to background
       Common.isAppInBackground = true;
     } else if (state == AppLifecycleState.resumed) {
-      // App is resuming from background
+      // App is resuming from background (not app start)
+      // Only show ad if app was in background (not on first start)
       if (!Common.inAppPurchase &&
           Common.addOnOff &&
           Common.isAppInBackground &&
@@ -112,41 +113,48 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Video Downloader',
+      title: 'Video Saver',
       // navigatorObservers: [FirebaseAnalyticsObserver(analytics: _analytics)],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark,
-        colorScheme: ColorScheme.dark(
-          primary: Colors.deepPurple,
-          secondary: Colors.purple,
-          surface: Colors.grey.shade900,
-          background: Colors.black,
+        brightness: Brightness.light,
+        colorScheme: ColorScheme.light(
+          primary: Colors.orange,
+          secondary: Colors.deepOrange,
+          surface: Colors.white,
+          background: Colors.white,
         ),
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.orange,
           foregroundColor: Colors.white,
           elevation: 0,
         ),
         cardTheme: CardThemeData(
-          color: Colors.grey.shade900,
+          color: Colors.white,
           elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
+            side: BorderSide(color: Colors.orange.withOpacity(0.2), width: 1),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: Colors.grey.shade800,
+          fillColor: Colors.grey.shade100,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide.none,
+            borderSide: BorderSide(color: Colors.orange.withOpacity(0.3)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: const BorderSide(color: Colors.orange, width: 2),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.orange,
+            foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),

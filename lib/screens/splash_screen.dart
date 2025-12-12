@@ -33,6 +33,10 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   final AppOpenAdManager _appOpenAdManager = AppOpenAdManager();
+  bool _adShownOnStart = false;
+  bool _isAppStart = true;
+  bool _adLoaded = false;
+  bool _navigationCompleted = false;
 
   @override
   void initState() {
@@ -55,6 +59,9 @@ class _SplashScreenState extends State<SplashScreen>
       end: 2 * 3.14159,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
 
+    // Mark as app start (not resume)
+    Common.isAppInBackground = false;
+    // Start timeout navigation (will be cancelled if ad shows)
     _navigateToNext();
   }
 
@@ -150,15 +157,54 @@ class _SplashScreenState extends State<SplashScreen>
           AdManager().initialize();
           SmallNativeAdService().initialize();
           NativeAdService().initialize();
+
+          // Wait a bit for MobileAds to be fully ready
+          await Future.delayed(const Duration(milliseconds: 500));
+
           // Load app open ad and show it when loaded (on app start)
           if (Common.app_open_ad_id.isNotEmpty) {
+            print('Loading app open ad on app start...');
             _appOpenAdManager.loadAd(
               onAdLoaded: () {
+                print('App open ad loaded successfully');
+                _adLoaded = true;
                 // Show ad immediately when loaded (app start)
+                if (_isAppStart && !_adShownOnStart && !Common.inAppPurchase) {
+                  print('Showing app open ad on app start');
+                  Future.delayed(const Duration(milliseconds: 200), () {
+                    if (mounted && !_navigationCompleted) {
+                      _appOpenAdManager.showAdWithCallback(
+                        onAdDismissed: () {
+                          print('App open ad dismissed, navigating...');
+                          _adShownOnStart = true;
+                          _isAppStart = false;
+                          // Navigate after ad is dismissed
+                          _performNavigation();
+                        },
+                      );
+                    }
+                  });
+                } else {
+                  // Ad loaded but conditions not met, navigate normally
+                  print(
+                    'Ad loaded but conditions not met, navigating normally',
+                  );
+                  if (!_navigationCompleted) {
+                    Future.delayed(const Duration(seconds: 2), () {
+                      _performNavigation();
+                    });
+                  }
+                }
               },
             );
           } else {
             // No app open ad, proceed normally
+            print('No app open ad ID, navigating normally');
+            if (!_navigationCompleted) {
+              Future.delayed(const Duration(seconds: 3), () {
+                _performNavigation();
+              });
+            }
           }
         } catch (e) {
           print('Error initializing ad services: $e');
@@ -171,12 +217,61 @@ class _SplashScreenState extends State<SplashScreen>
       // Initialize MobileAds even if API fails
       try {
         await MobileAds.instance.initialize();
+        print('MobileAds initialized successfully (API failed path)');
         Common.addOnOff = true;
+
+        // Wait a bit for MobileAds to be fully ready
+        await Future.delayed(const Duration(milliseconds: 500));
 
         // Try to load and show app open ad even if API failed
         if (Common.addOnOff && Common.app_open_ad_id.isNotEmpty) {
-          _appOpenAdManager.loadAd(onAdLoaded: () {});
-        } else {}
+          print('Loading app open ad (API failed path)...');
+          _appOpenAdManager.loadAd(
+            onAdLoaded: () {
+              print('App open ad loaded successfully (API failed path)');
+              _adLoaded = true;
+              // Show ad immediately when loaded (app start)
+              if (_isAppStart && !_adShownOnStart && !Common.inAppPurchase) {
+                print('Showing app open ad on app start (API failed path)');
+                Future.delayed(const Duration(milliseconds: 200), () {
+                  if (mounted && !_navigationCompleted) {
+                    _appOpenAdManager.showAdWithCallback(
+                      onAdDismissed: () {
+                        print(
+                          'App open ad dismissed, navigating... (API failed path)',
+                        );
+                        _adShownOnStart = true;
+                        _isAppStart = false;
+                        // Navigate after ad is dismissed
+                        _performNavigation();
+                      },
+                    );
+                  }
+                });
+              } else {
+                // Ad loaded but conditions not met, navigate normally
+                print(
+                  'Ad loaded but conditions not met, navigating normally (API failed path)',
+                );
+                if (!_navigationCompleted) {
+                  Future.delayed(const Duration(seconds: 2), () {
+                    _performNavigation();
+                  });
+                }
+              }
+            },
+          );
+        } else {
+          // No ad, navigate normally
+          print(
+            'No app open ad ID or ads disabled, navigating normally (API failed path)',
+          );
+          if (!_navigationCompleted) {
+            Future.delayed(const Duration(seconds: 3), () {
+              _performNavigation();
+            });
+          }
+        }
       } catch (initError) {
         print('Error initializing MobileAds after API failure: $initError');
       }
@@ -184,8 +279,23 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _navigateToNext() async {
-    await Future.delayed(const Duration(seconds: 5));
-    if (!mounted) return;
+    // Wait for splash screen display (minimum 2 seconds)
+    await Future.delayed(const Duration(seconds: 2));
+
+    // If ad is not loaded after 5 seconds, navigate anyway (timeout)
+    await Future.delayed(const Duration(seconds: 3));
+
+    // If ad hasn't been shown and navigation hasn't completed, navigate now
+    if (!_navigationCompleted && (!_adLoaded || _adShownOnStart)) {
+      print('Timeout: Navigating without ad or after ad was shown');
+      _performNavigation();
+    }
+    // If ad is loaded and will be shown, navigation will happen in ad callback
+  }
+
+  Future<void> _performNavigation() async {
+    if (_navigationCompleted || !mounted) return;
+    _navigationCompleted = true;
 
     final isOnboardingCompleted = await Preferences.isOnboardingCompleted();
 
@@ -215,9 +325,9 @@ class _SplashScreenState extends State<SplashScreen>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.deepPurple.shade900,
-              Colors.purple.shade800,
-              Colors.indigo.shade900,
+              Colors.orange.shade700,
+              Colors.deepOrange.shade600,
+              Colors.orange.shade400,
             ],
           ),
         ),
@@ -266,11 +376,11 @@ class _SplashScreenState extends State<SplashScreen>
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: LinearGradient(
-                              colors: [Colors.white, Colors.purple.shade300],
+                              colors: [Colors.white, Colors.orange.shade300],
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.purple.withOpacity(0.5),
+                                color: Colors.orange.withOpacity(0.5),
                                 blurRadius: 30,
                                 spreadRadius: 10,
                               ),
@@ -279,7 +389,7 @@ class _SplashScreenState extends State<SplashScreen>
                           child: const Icon(
                             Icons.play_circle_filled,
                             size: 80,
-                            color: Colors.deepPurple,
+                            color: Colors.orange,
                           ),
                         ),
                       );
@@ -287,7 +397,7 @@ class _SplashScreenState extends State<SplashScreen>
                   ).animate().fadeIn(duration: 1000.ms).scale(delay: 200.ms),
                   const SizedBox(height: 30),
                   const Text(
-                        'Video Downloader',
+                        'Video Saver',
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -300,7 +410,7 @@ class _SplashScreenState extends State<SplashScreen>
                       .slideY(begin: 0.3, end: 0),
                   const SizedBox(height: 10),
                   const Text(
-                    'Download videos from all platforms',
+                    'Save videos from all platforms',
                     style: TextStyle(fontSize: 16, color: Colors.white70),
                   ).animate().fadeIn(delay: 800.ms, duration: 1000.ms),
                   const SizedBox(height: 50),

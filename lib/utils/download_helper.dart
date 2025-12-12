@@ -14,7 +14,7 @@ class DownloadHelper {
       final hasPermission = await FileUtils.requestStoragePermission();
       if (!hasPermission) {
         throw Exception(
-          'Storage permission denied. Please grant storage permission to download videos.',
+          'Storage permission denied. Please grant storage permission to save videos.',
         );
       }
 

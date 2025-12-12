@@ -60,13 +60,13 @@ class _VideoListScreenState extends State<VideoListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           'My Videos',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
@@ -85,17 +85,10 @@ class _VideoListScreenState extends State<VideoListScreen> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.black, Colors.grey.shade900],
-          ),
-        ),
         child: _isLoading
             ? const Center(
                 child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
                 ),
               )
             : _videos.isEmpty
@@ -122,7 +115,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                       icon: const Icon(Icons.refresh),
                       label: const Text('Refresh'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
+                        backgroundColor: Colors.orange,
                         foregroundColor: Colors.white,
                       ),
                     ),
@@ -131,7 +124,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
               )
             : RefreshIndicator(
                 onRefresh: _loadVideos,
-                color: Colors.deepPurple,
+                color: Colors.orange,
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -148,22 +141,18 @@ class _VideoListScreenState extends State<VideoListScreen> {
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [Colors.grey.shade900, Colors.grey.shade800],
+                          colors: [Colors.white, Colors.grey.shade50],
                         ),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: Colors.deepPurple.withOpacity(0.3),
-                          width: 1.5,
-                        ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.deepPurple.withOpacity(0.2),
+                              color: Colors.grey,
                             blurRadius: 20,
                             spreadRadius: 2,
                             offset: const Offset(0, 8),
                           ),
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
+                            color: Colors.grey.withOpacity(0.2),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),
@@ -187,43 +176,15 @@ class _VideoListScreenState extends State<VideoListScreen> {
                                       child: Container(
                                         width: 60,
                                         height: 60,
-                                        color: Colors.black,
                                         child: Stack(
                                           fit: StackFit.expand,
                                           alignment: Alignment.center,
                                           children: [
-                                            // Gradient Background
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    Colors.deepPurple
-                                                        .withOpacity(0.4),
-                                                    Colors.purple.withOpacity(
-                                                      0.4,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-
                                             // Play Icon
                                             Container(
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: Colors.white.withOpacity(
-                                                  0.2,
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.black
-                                                        .withOpacity(0.5),
-                                                    blurRadius: 10,
-                                                    spreadRadius: 2,
-                                                  ),
-                                                ],
+                                                color: Colors.orange,
                                               ),
                                               padding: const EdgeInsets.all(12),
                                               child: const Icon(
@@ -244,7 +205,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                                         vertical: 4,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.8),
+                                        color: Colors.orange.shade100,
                                         borderRadius: BorderRadius.circular(12),
                                         border: Border.all(
                                           color: Colors.white.withOpacity(0.3),
@@ -256,8 +217,8 @@ class _VideoListScreenState extends State<VideoListScreen> {
                                         builder: (context, snapshot) {
                                           return Text(
                                             snapshot.data ?? '',
-                                            style: const TextStyle(
-                                              color: Colors.white,
+                                            style: TextStyle(
+                                              color: Colors.orange.shade900,
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -284,7 +245,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                                         style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                          color: Colors.black87,
                                           height: 1.3,
                                         ),
                                         maxLines: 2,
@@ -325,15 +286,15 @@ class _VideoListScreenState extends State<VideoListScreen> {
                                               decoration: BoxDecoration(
                                                 gradient: LinearGradient(
                                                   colors: [
-                                                    Colors.deepPurple,
-                                                    Colors.purple,
-                                                  ],
+                                                Colors.orange,
+                                                Colors.deepOrange,
+                                              ],
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(12),
                                                 boxShadow: [
                                                   BoxShadow(
-                                                    color: Colors.deepPurple
+                                                    color: Colors.grey
                                                         .withOpacity(0.5),
                                                     blurRadius: 8,
                                                     spreadRadius: 1,

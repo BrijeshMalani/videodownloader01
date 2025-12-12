@@ -304,7 +304,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('No download URL available'),
+            content: Text('No saveer URL available'),
             backgroundColor: Colors.red,
           ),
         );
@@ -333,7 +333,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                'MP3 downloaded successfully!\nSaved to: ${downloadResult['filePath'] ?? 'Download folder'}',
+                'MP3 Save successfully!\nSaved to: ${downloadResult['filePath'] ?? 'Download folder'}',
               ),
               backgroundColor: Colors.green,
               duration: const Duration(seconds: 4),
@@ -365,7 +365,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Convert to MP3'),
         backgroundColor: Colors.orange.shade700,
@@ -373,13 +373,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
         elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.black, Colors.grey.shade900],
-          ),
-        ),
+        decoration: const BoxDecoration(color: Colors.white),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -389,7 +383,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade900,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
                     color: Colors.orange.withOpacity(0.3),
@@ -423,7 +417,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.black87,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -432,7 +426,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey.shade400,
+                        color: Colors.grey.shade600,
                       ),
                     ),
                   ],
@@ -444,7 +438,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                 Container(
                   padding: const EdgeInsets.all(25),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade900,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: Colors.orange.withOpacity(0.3)),
                   ),
@@ -468,7 +462,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black87,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -477,7 +471,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey.shade400,
+                          color: Colors.grey.shade600,
                         ),
                       ),
                       const SizedBox(height: 25),
@@ -513,7 +507,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                 Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade900,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: Colors.orange.withOpacity(0.3)),
                   ),
@@ -540,7 +534,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: Colors.black87,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -553,7 +547,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                                   'Size: ${snapshot.data ?? 'Unknown'}',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey.shade400,
+                                    color: Colors.grey.shade600,
                                   ),
                                 );
                               },
@@ -628,7 +622,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade900,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: Colors.orange.withOpacity(0.3)),
                   ),
@@ -643,13 +637,13 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black87,
                         ),
                       ),
                       const SizedBox(height: 20),
                       LinearProgressIndicator(
                         value: _conversionProgress,
-                        backgroundColor: Colors.grey.shade800,
+                        backgroundColor: Colors.grey.shade200,
                         valueColor: const AlwaysStoppedAnimation<Color>(
                           Colors.orange,
                         ),
@@ -675,7 +669,7 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade900,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: Colors.green.withOpacity(0.3)),
                   ),
@@ -684,17 +678,17 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                       const Icon(Icons.download, color: Colors.green, size: 40),
                       const SizedBox(height: 15),
                       const Text(
-                        'Downloading MP3...',
+                        'Saving MP3...',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black87,
                         ),
                       ),
                       const SizedBox(height: 20),
                       LinearProgressIndicator(
                         value: _downloadProgress,
-                        backgroundColor: Colors.grey.shade800,
+                        backgroundColor: Colors.grey.shade200,
                         valueColor: const AlwaysStoppedAnimation<Color>(
                           Colors.green,
                         ),
@@ -751,17 +745,17 @@ class _MP3ConverterScreenState extends State<MP3ConverterScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        'Your MP3 file is ready to download',
+                        'Your MP3 file is ready to save',
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey.shade400,
+                          color: Colors.grey.shade600,
                         ),
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton.icon(
                         onPressed: () => _downloadMP3(),
                         icon: const Icon(Icons.download),
-                        label: const Text('Download MP3'),
+                        label: const Text('Save MP3'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
                           foregroundColor: Colors.white,

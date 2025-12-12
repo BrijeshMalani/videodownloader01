@@ -135,7 +135,7 @@ class _WorkingNativeAdWidgetState extends State<WorkingNativeAdWidget> {
     return Container(
       height: 110,
       decoration: BoxDecoration(
-        color: Color(0xFF1C1C35),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [
           BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
@@ -146,7 +146,7 @@ class _WorkingNativeAdWidgetState extends State<WorkingNativeAdWidget> {
         child: _isAdLoaded && _nativeAd != null
             ? AdWidget(ad: _nativeAd!)
             : Container(
-                color: Color(0xFF1A1A2E),
+                color: Colors.white,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

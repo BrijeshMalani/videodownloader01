@@ -263,10 +263,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               Container(
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Colors.deepPurple.withOpacity(0.8),
+                                  color: Colors.orange.withOpacity(0.8),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.deepPurple.withOpacity(0.5),
+                                      color: Colors.orange.withOpacity(0.5),
                                       blurRadius: 15,
                                       spreadRadius: 5,
                                     ),
@@ -308,7 +308,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   _controller,
                                   allowScrubbing: true,
                                   colors: VideoProgressColors(
-                                    playedColor: Colors.deepPurple,
+                                    playedColor: Colors.orange,
                                     bufferedColor: Colors.grey.shade600,
                                     backgroundColor: Colors.grey.shade800,
                                   ),
